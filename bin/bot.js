@@ -163,7 +163,7 @@
               "boothLocked": true,
               "waitListEnabled": true,
               "maxPlays": 1,
-              "maxDJs": 5
+              "maxDJs": 50
             }
           ]
         }),
@@ -710,8 +710,8 @@
 
     themeCommand.prototype.functionality = function() {
       var msg;
-      msg = "Any type of Bass Music is allowed here. Including Dubstep, Complextro, Drum and Bass, ";
-      msg += "Garage, Breakbeat, Hardstyle, Moombahton, HEAVY EDM, House, Electro, and Trance!!";
+      msg = "Only Chill is allowed here!";
+      msg += "(Please, respect the theme)";
       return API.sendChat(msg);
     };
 
@@ -735,9 +735,7 @@
 
     rulesCommand.prototype.functionality = function() {
       var msg;
-      msg = "1) Play good sound quality music. ";
-      msg += "2) Don't replay a song on the room history. 3) Max song limit 8 minutes. ";
-      msg += "4) DO NOT GO AWAY FROM KEYBOARD ON DECK! Please WOOT on DJ Booth and respect your fellow DJs!";
+      msg = "Community Rules - http://tinyurl.com/ChillDiariesRules";
       return API.sendChat(msg);
     };
 
@@ -761,10 +759,10 @@
 
     roomHelpCommand.prototype.functionality = function() {
       var msg1, msg2;
-      msg1 = "Welcome to the Dubstep Den! Create a playlist and populate it with songs from either YouTube or Soundcloud.  ";
-      msg1 += "Click the 'Join Waitlist' button and wait your turn to play music. Most electronic music allowed, type '/theme' for specifics.";
-      msg2 = "Stay active while waiting to play your song or I'll remove you.  Play good quality music that hasn't been played recently (check room history).  ";
-      msg2 += "Avoid over played artists like Skrillex. Ask a mod if you're unsure about your song choice";
+      msg1 = "Welcome to the Chill Diaries! Create a playlist and populate it with songs from YouTube or Soundcloud. ";
+      msg1 += "Click the 'Join Waitlist' button and wait your turn to play music (type '/theme' for theme restrictions). ";
+      msg2 = "Stay active while waiting to play your song or I'll remove you. Play good quality music that hasn't been played recently (check room history).  ";
+      msg2 += "Ask a mod if you're unsure about your song choice";
       API.sendChat(msg1);
       return setTimeout((function() {
         return API.sendChat(msg2);
@@ -772,58 +770,6 @@
     };
 
     return roomHelpCommand;
-
-  })(Command);
-
-  sourceCommand = (function(_super) {
-    __extends(sourceCommand, _super);
-
-    function sourceCommand() {
-      _ref6 = sourceCommand.__super__.constructor.apply(this, arguments);
-      return _ref6;
-    }
-
-    sourceCommand.prototype.init = function() {
-      this.command = ['/source', '/sourcecode', '/author'];
-      this.parseType = 'exact';
-      return this.rankPrivelege = 'user';
-    };
-
-    sourceCommand.prototype.functionality = function() {
-      var msg;
-      msg = 'Backus wrote me in CoffeeScript.  A generalized version of me should be available on github soon!';
-      return API.sendChat(msg);
-    };
-
-    return sourceCommand;
-
-  })(Command);
-
-  wootCommand = (function(_super) {
-    __extends(wootCommand, _super);
-
-    function wootCommand() {
-      _ref7 = wootCommand.__super__.constructor.apply(this, arguments);
-      return _ref7;
-    }
-
-    wootCommand.prototype.init = function() {
-      this.command = '!woot';
-      this.parseType = 'startsWith';
-      return this.rankPrivelege = 'user';
-    };
-
-    wootCommand.prototype.functionality = function() {
-      var msg, nameIndex;
-      msg = "Please WOOT on DJ Booth and support your fellow DJs! AutoWoot: http://bit.ly/Lwcis0";
-      if ((nameIndex = this.msgData.message.indexOf('@')) !== -1) {
-        return API.sendChat(this.msgData.message.substr(nameIndex) + ', ' + msg);
-      } else {
-        return API.sendChat(msg);
-      }
-    };
-
-    return wootCommand;
 
   })(Command);
 
@@ -836,50 +782,18 @@
     }
 
     badQualityCommand.prototype.init = function() {
-      this.command = '.128';
+      this.command = '!badquality';
       this.parseType = 'exact';
       return this.rankPrivelege = 'mod';
     };
 
     badQualityCommand.prototype.functionality = function() {
       var msg;
-      msg = "Flagged for bad sound quality. Where do you get your music? The garbage can? Don't play this low quality tune again!";
+      msg = "Skipped for bad sound quality.";
       return API.sendChat(msg);
     };
 
     return badQualityCommand;
-
-  })(Command);
-
-  downloadCommand = (function(_super) {
-    __extends(downloadCommand, _super);
-
-    function downloadCommand() {
-      _ref9 = downloadCommand.__super__.constructor.apply(this, arguments);
-      return _ref9;
-    }
-
-    downloadCommand.prototype.init = function() {
-      this.command = '!download';
-      this.parseType = 'exact';
-      return this.rankPrivelege = 'user';
-    };
-
-    downloadCommand.prototype.functionality = function() {
-      var e, eAuthor, eTitle, msg;
-      if (data.currentsong == null) {
-        return;
-      }
-      e = encodeURIComponent;
-      eAuthor = e(data.currentsong.author);
-      eTitle = e(data.currentsong.title);
-      msg = "Try this link for HIGH QUALITY DOWNLOAD: http://google.com/#hl=en&q=";
-      msg += eAuthor + "%20-%20" + eTitle;
-      msg += "%20site%3Azippyshare.com%20OR%20site%3Asoundowl.com%20OR%20site%3Ahulkshare.com%20OR%20site%3Asoundcloud.com";
-      return API.sendChat(msg);
-    };
-
-    return downloadCommand;
 
   })(Command);
 
@@ -1040,7 +954,7 @@
       undoHooks();
       API.sendChat('Deleting bot data...');
       data.implode();
-      return API.sendChat('Consider me dead');
+      return API.sendChat('RIP CookieBØT');
     };
 
     return dieCommand;
@@ -1251,7 +1165,7 @@
         }
         API.sendChat('Not sure who ' + name + ' is');
       } else {
-        API.sendChat('Yo Gimme a name r-tard');
+        API.sendChat(' ');
       }
     };
 
@@ -1689,10 +1603,10 @@
       sender = API.getUser(chat.fromID);
       if (!sender.ambassador && !sender.moderator && !sender.owner && !sender.superuser) {
         if (!data.users[chat.fromID]["protected"]) {
-          API.sendChat("Don't spam room links you ass clown");
+          API.sendChat("Don't spam room links!");
           return API.moderateDeleteChat(chat.chatID);
         } else {
-          return API.sendChat("I'm supposed to kick you, but you're just too darn pretty.");
+          return API.sendChat(" ");
         }
       }
     }
